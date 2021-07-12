@@ -6,10 +6,10 @@ function App() {
   const [imgFile, setImgFile] = useState(null); //파일
 
   const handleChangeFile = (event) => {
-    console.log(event.target.files);
     setImgFile(event.target.files);
 
     setImgBase64([]);
+
     for (var i = 0; i < event.target.files.length; i++) {
       if (event.target.files[i]) {
         let reader = new FileReader();
@@ -21,11 +21,7 @@ function App() {
           console.log(base64);
           if (base64) {
             var base64Sub = base64.toString();
-
             setImgBase64((imgBase64) => [...imgBase64, base64Sub]);
-            //  setImgBase64(newObj);
-            // 파일 base64 상태 업데이트
-            //  console.log(images)
           }
         };
       }
@@ -33,21 +29,41 @@ function App() {
   };
 
   return (
-    <div className="fullWidth">
-      인스타 사진 크기 조절
-      <div>
-        <input type="file" id="file" onChange={handleChangeFile} multiple="multiple" />
+    <div className="root">
+      <div className="container">
+        <div className="title"> 인스타 사진 크기 조절 </div>
+        {/* <div className="size">hihi</div> */}
+        <div className="input-container">
+          <div className="input-title">
+            <div>가로 </div>
+            <div>
+              <input
+                type="width"
+                name="width"
+                // value={password}
+                // onChange={handleChange}
+              />
+            </div>
+          </div>
+          <div className="input-title">
+            <div> 세로</div>
+            <div>
+              <input
+                type="height"
+                name="height"
+                // value={password}
+                // onChange={handleChange}
+              />
+            </div>
+          </div>
+        </div>
       </div>
-      {imgBase64.map((item) => {
-        return (
-          <img
-            className="d-block w-100"
-            src={item}
-            alt="First slide"
-            style={{ width: '100%', height: '100%' }}
-          />
-        );
-      })}
+      <div className="fullWidth">
+        <input type="file" id="file" onChange={handleChangeFile} multiple="multiple" />
+        {imgBase64.map((item) => {
+          return <img className="image" src={item} alt="First slide" />;
+        })}
+      </div>
     </div>
   );
 }
